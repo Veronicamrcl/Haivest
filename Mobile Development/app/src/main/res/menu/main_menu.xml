@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/ic_person_24"
+        android:title="Profile"
+        app:showAsAction="collapseActionView|always"
+        />
+
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/ic_shopping_cart_24"
+        android:title="Cart"
+        app:showAsAction="collapseActionView|always"
+        />
+
+
+
+</menu>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.android.haivest.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_analyze"
+        android:name="com.android.haivest.ui.analyze.AnalyzeFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_analyze" />
+    <fragment
+        android:id="@+id/navigation_business"
+        android:name="com.android.haivest.ui.business.BusinessFragment"
+        android:label="Business"
+        tools:layout="@layout/fragment_bussiness" />
+
+</navigation>
