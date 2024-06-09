@@ -15,6 +15,10 @@ app.use((req, res, next) => {
 const router = require('./routes/routes');
 app.use('/', router);
 
+// Proxy ke server Flask
+const { createProxyMiddleware } = require('http-proxy-middleware');
+app.use('/flask', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
+
 app.listen(port, ()=>{
     console.log(`Server berjalan di http://localhost:${port}`);
 });

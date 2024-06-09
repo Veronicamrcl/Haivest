@@ -1,0 +1,6 @@
+Flask
+mysql-connector-python
+bcrypt
+pyjwt
+google-cloud-storage
+
