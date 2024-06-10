@@ -96,26 +96,37 @@ router.post('/logout', (req, res) => {
 
 // Endpoint untuk pendaftaran (register)
 router.post('/register', (req, res) => {
-  const { username, password } = req.body;
+  const { name, username, password } = req.body;
 
-  // Cek apakah username atau password kosong
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
+  // Cek apakah nama, username atau password kosong
+  if (!name || !username || !password) {
+    return res.status(400).json({ error: 'Name, username, and password are required' });
   }
 
-  // Hash password sebelum menyimpan ke database
-  bcrypt.hash(password, 10, (err, hash) => {
+  // Cek apakah username sudah ada di database
+  const checkUserSql = 'SELECT * FROM user WHERE username = ?';
+  connection.query(checkUserSql, [username], (err, result) => {
     if (err) {
-      return res.status(500).json({ error: 'Hashing password failed' });
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (result.length > 0) {
+      return res.status(400).json({ error: 'Username already exists' });
     }
 
-    // Query untuk menambahkan pengguna baru ke database
-    const sql = 'INSERT INTO user (username, password) VALUES (?, ?)';
-    connection.query(sql, [username, hash], (err, result) => {
+    // Hash password sebelum menyimpan ke database
+    bcrypt.hash(password, 10, (err, hash) => {
       if (err) {
-        return res.status(500).json({ error: 'Registration failed' });
+        return res.status(500).json({ error: 'Hashing password failed' });
       }
-      res.status(200).json({ message: 'Registration successful' });
+
+      // Query untuk menambahkan pengguna baru ke database
+      const sql = 'INSERT INTO user (name, username, password) VALUES (?, ?, ?)';
+      connection.query(sql, [name, username, hash], (err, result) => {
+        if (err) {
+          return res.status(500).json({ error: 'Registration failed' });
+        }
+        res.status(200).json({ message: 'Registration successful' });
+      });
     });
   });
 });
