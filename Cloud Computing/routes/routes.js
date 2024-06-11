@@ -1,10 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const connection = require('../connect'); 
+const jwt = require('jsonwebtoken');
+const connection = require('../connect');
 const verifyToken = require('../middleware/verifikasi');
 const authRouter = require('../middleware/auth');
+const { secret } = require('../config/secret'); // Mengimpor secret key dari config
+
 router.use('/auth', authRouter);
+
+// Secret key untuk JWT
+const JWT_SECRET = secret;
+const JWT_REFRESH_SECRET = secret; // Anda bisa menggunakan secret yang berbeda untuk refresh token jika diperlukan
 
 // Endpoint awal
 router.get("/", (req, res) => {
@@ -17,12 +24,10 @@ router.get("/", (req, res) => {
 router.post('/register', (req, res) => {
   const { name, username, password } = req.body;
 
-  // Cek apakah nama, username atau password kosong
   if (!name || !username || !password) {
     return res.status(400).json({ error: 'Name, username, and password are required' });
   }
 
-  // Cek apakah username sudah ada di database
   const checkUserSql = 'SELECT * FROM user WHERE username = ?';
   connection.query(checkUserSql, [username], (err, result) => {
     if (err) {
@@ -32,13 +37,11 @@ router.post('/register', (req, res) => {
       return res.status(400).json({ error: 'Username already exists' });
     }
 
-    // Hash password sebelum menyimpan ke database
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) {
         return res.status(500).json({ error: 'Hashing password failed' });
       }
 
-      // Query untuk menambahkan pengguna baru ke database
       const sql = 'INSERT INTO user (name, username, password) VALUES (?, ?, ?)';
       connection.query(sql, [name, username, hash], (err, result) => {
         if (err) {
@@ -54,7 +57,6 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  // Query untuk mencari pengguna berdasarkan username
   const sql = 'SELECT * FROM user WHERE username = ?';
   connection.query(sql, [username], (err, result) => {
     if (err) {
@@ -64,7 +66,6 @@ router.post('/login', (req, res) => {
       return res.status(401).json({ error: 'Username not found' });
     }
 
-    // Membandingkan password yang dimasukkan dengan password yang disimpan dalam database
     bcrypt.compare(password, result[0].password, (err, match) => {
       if (err) {
         return res.status(500).json({ error: 'Login failed' });

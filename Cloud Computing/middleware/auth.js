@@ -1,12 +1,17 @@
+const mysql = require("mysql2");
+const md5 = require('md5');
+const ip = require("ip");
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const connection = require('../connect');
+require('dotenv').config(); // Memuat variabel lingkungan dari file .env
+const { secret } = require("../config/secret"); // Mengimpor secret dari config
 
 // Secret keys for JWT
-const JWT_SECRET = 'your_jwt_secret_key';
-const JWT_REFRESH_SECRET = 'your_jwt_refresh_secret_key';
+const JWT_SECRET = secret;
+const JWT_REFRESH_SECRET = secret; // Anda bisa menggunakan secret yang berbeda untuk refresh token jika diperlukan
 
 // Endpoint untuk login
 router.post('/login', (req, res) => {

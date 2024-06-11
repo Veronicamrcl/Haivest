@@ -1,19 +1,20 @@
-var mysql = require('mysql2');
 require('dotenv').config();
+const mysql = require('mysql');
 
+// Gunakan environment variables untuk koneksi database
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', 
-  database: 'haivest' 
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 
-connection.connect((err) => {
+connection.connect(err => {
   if (err) {
-    console.error('Koneksi ke MySQL gagal: ', err);
+    console.error('error connecting: ' + err.stack);
     return;
   }
-  console.log('MYSQL berhasil terkoneksi');
+  console.log("MYSQL berhasil terkoneksi");
 });
 
 module.exports = connection;

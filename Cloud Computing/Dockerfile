@@ -1,5 +1,5 @@
-# Gunakan node versi LTS sebagai base image
-FROM node:lts-alpine
+# Menggunakan image Node.js versi 16.19.0 sebagai base image
+FROM node:16.19.0
 
 # Mengatur direktori kerja di dalam image
 WORKDIR /app
@@ -15,4 +15,3 @@ COPY . .
 
 # Menjalankan perintah untuk menjalankan aplikasi
 CMD [ "npm", "run", "start" ]
-

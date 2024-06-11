@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'your_jwt_secret_key';
+require('dotenv').config(); // Mengimport dotenv untuk mengakses variabel lingkungan
+const { secret } = require('../config/secret'); // Mengimpor secret dari config
+
+const JWT_SECRET = secret; // Menggunakan secret key dari config
 
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
