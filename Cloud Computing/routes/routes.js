@@ -6,6 +6,7 @@ const connection = require('../connect');
 const verifyToken = require('../middleware/verifikasi');
 const authRouter = require('../middleware/auth');
 const { secret } = require('../config/secret'); // Mengimpor secret key dari config
+const newsController = require('../controllers/newsController'); // Mengimpor newsController
 
 router.use('/auth', authRouter);
 
@@ -92,5 +93,8 @@ router.post('/login', (req, res) => {
 router.get('/protected', verifyToken, (req, res) => {
   res.status(200).json({ message: 'This is a protected route', userId: req.userId });
 });
+
+// Endpoint untuk mendapatkan berita tentang tanaman hidroponik
+router.get('/news', newsController.getHydroponicNews);
 
 module.exports = router;

@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const config = require('./config/secret'); // Mengimport konfigurasi secret
+const newsController = require('./controllers/newsController'); // Mengimport newsController
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
