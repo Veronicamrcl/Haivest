@@ -101,54 +101,5 @@ router.get('/protected', verifyToken, (req, res) => {
 // Endpoint untuk mendapatkan berita tentang tanaman hidroponik
 router.get('/news', newsController.getHydroponicNews);
 
-// Endpoint untuk mendapatkan profil pengguna (GET /profile)
-router.get('/profile', verifyToken, (req, res) => {
-  const userId = req.userId; 
-
-  const sql = 'SELECT id, name, username FROM user WHERE id = ?';
-  connection.query(sql, [userId], (err, result) => {
-      if (err) {
-          return res.status(500).json({ error: 'Failed to fetch profile' });
-      }
-      if (result.length === 0) {
-          return res.status(404).json({ error: 'User not found' });
-      }
-
-      const profile = result[0];
-      res.status(200).json({ profile });
-  });
-});
-
-// Endpoint untuk mengubah profil pengguna (PUT /profile)
-router.put('/profile', verifyToken, (req, res) => {
-  const userId = req.userId; 
-  const { name, username } = req.body;
-
-  if (!name || !username) {
-      return res.status(400).json({ error: 'Name and username are required' });
-  }
-
-  const sql = 'UPDATE user SET name = ?, username = ? WHERE id = ?';
-  connection.query(sql, [name, username, userId], (err, result) => {
-      if (err) {
-          return res.status(500).json({ error: 'Failed to update profile' });
-      }
-      res.status(200).json({ message: 'Profile updated successfully' });
-  });
-});
-
-// Endpoint untuk menghapus akun pengguna (DELETE /profile)
-router.delete('/profile', verifyToken, (req, res) => {
-  const userId = req.userId;
-
-  const sql = 'DELETE FROM user WHERE id = ?';
-  connection.query(sql, [userId], (err, result) => {
-      if (err) {
-          return res.status(500).json({ error: 'Failed to delete account' });
-      }
-      res.status(200).json({ message: 'Account deleted successfully' });
-  });
-});
-
 
 module.exports = router;
