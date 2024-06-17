@@ -4,18 +4,10 @@
 
     <item
         android:id="@+id/account"
-        android:icon="@drawable/ic_person_24"
+        android:icon="@drawable/ic_circle_account"
         android:title="Profile"
         app:showAsAction="collapseActionView|always"
+        android:iconTint="@color/blue_light"
         />
-
-    <item
-        android:id="@+id/cart"
-        android:icon="@drawable/ic_shopping_cart_24"
-        android:title="Cart"
-        app:showAsAction="collapseActionView|always"
-        />
-
-
 
 </menu>

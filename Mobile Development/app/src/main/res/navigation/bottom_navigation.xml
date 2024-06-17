@@ -13,12 +13,26 @@
     <fragment
         android:id="@+id/navigation_analyze"
         android:name="com.android.haivest.ui.analyze.AnalyzeFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_analyze" />
+        android:label="Analyze"
+        tools:layout="@layout/fragment_analyze">
+        <action
+            android:id="@+id/action_analyzeFragment_to_homeFragment"
+            app:destination="@id/navigation_home"/>
+    </fragment>
     <fragment
         android:id="@+id/navigation_business"
         android:name="com.android.haivest.ui.business.BusinessFragment"
         android:label="Business"
-        tools:layout="@layout/fragment_bussiness" />
+        tools:layout="@layout/fragment_bussiness">
+        <action
+            android:id="@+id/action_businessFragment_to_generateFragment"
+            app:destination="@id/generateFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/generateFragment"
+        android:name="com.android.haivest.ui.business.GenerateFragment"
+        android:label="Generate"
+        tools:layout="@layout/fragment_generate"/>
 
 </navigation>
