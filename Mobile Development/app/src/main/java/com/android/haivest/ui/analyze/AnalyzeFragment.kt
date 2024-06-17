@@ -1,35 +1,34 @@
 package com.android.haivest.ui.analyze
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.OrientationEventListener
-import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.android.haivest.R
 import com.android.haivest.databinding.FragmentAnalyzeBinding
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Exception
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class AnalyzeFragment : Fragment() {
 
-    private lateinit var binding: FragmentAnalyzeBinding
+    private var _binding: FragmentAnalyzeBinding? = null
+    private val binding get() = _binding!!
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
 
@@ -38,13 +37,23 @@ class AnalyzeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAnalyzeBinding.inflate(inflater, container, false)
+        _binding = FragmentAnalyzeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupView()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        setupView()
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_analyzeFragment_to_homeFragment)
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.action_analyzeFragment_to_homeFragment)
+        }
     }
 
     private fun setupView() {
@@ -96,7 +105,7 @@ class AnalyzeFragment : Fragment() {
                 val preview = Preview.Builder()
                     .build()
                     .also {
-                        it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                        it.setSurfaceProvider(binding?.viewFinder!!.surfaceProvider)
                     }
 
                 imageCapture = ImageCapture.Builder().build()
@@ -141,6 +150,11 @@ class AnalyzeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Camera permission required", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

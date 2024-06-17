@@ -5,31 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.android.haivest.R
-import com.android.haivest.databinding.FragmentBussinessBinding
+import com.android.haivest.databinding.FragmentGenerateBinding
 
-class BusinessFragment : Fragment() {
+class GenerateFragment : Fragment() {
 
-    private var binding: FragmentBussinessBinding? = null
+    private var binding: FragmentGenerateBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBussinessBinding.inflate(inflater, container, false)
+        binding = FragmentGenerateBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.buttonStartBusiness?.setOnClickListener {
-            findNavController().navigate(R.id.action_businessFragment_to_generateFragment)
-        }
-    }
+        binding?.generateButton?.setOnClickListener {
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+        }
     }
 }
