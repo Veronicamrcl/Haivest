@@ -33,6 +33,11 @@ class LoginActivity:AppCompatActivity() {
             val username = binding.usernameEditText.text.toString()
             val password = binding.loginPasswordEditText.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty()) {
+                val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                with (sharedPref.edit()) {
+                    putString("username", username)
+                    apply()
+                }
                 loginViewModel.login(username, password)
                 binding.progressBar.visibility = View.VISIBLE
             } else {

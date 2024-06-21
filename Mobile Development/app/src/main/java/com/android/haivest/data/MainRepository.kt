@@ -1,9 +1,8 @@
 package com.android.haivest.data
 
-import android.util.Log
 import com.android.haivest.data.local.UserPreference
 import com.android.haivest.data.model.User
-import com.android.haivest.data.network.ApiService
+import com.android.haivest.data.network.auth.ApiService
 import com.android.haivest.data.network.request.LoginRequest
 import com.android.haivest.data.network.request.RegisterRequest
 import com.android.haivest.data.network.response.LoginResponse
@@ -47,7 +46,7 @@ class MainRepository private constructor(
             apiService: ApiService,
             userPreference: UserPreference,
 
-        ): MainRepository =
+            ): MainRepository =
             MainRepository(apiService, userPreference)
     }
 

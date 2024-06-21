@@ -8,4 +8,5 @@
     <color name="green_highlight">#A0D995</color>
 
     <color name="red_error">#FF0000</color>
+    <color name="gray">#D9D9D9</color>
 </resources>

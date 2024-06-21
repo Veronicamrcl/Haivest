@@ -1,54 +1,56 @@
 package com.android.haivest
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.android.haivest.data.factory.ViewModelFactory
 import com.android.haivest.databinding.ActivityMainBinding
-import com.android.haivest.ui.analyze.AnalyzeFragment
-import com.android.haivest.ui.business.BusinessFragment
-import com.android.haivest.ui.home.HomeFragment
+import com.android.haivest.ui.auth.login.LoginActivity
+import com.android.haivest.ui.home.HomeViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: HomeViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
+    private var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.background = null
-
-        // Set the initial fragment
         if (savedInstanceState == null) {
-            replaceFragment(HomeFragment())
+            val bottomNav: BottomNavigationView = binding.bottomNavigationView
+            val navController = findNavController(R.id.nav_host_fragment)
+
+            bottomNav.setupWithNavController(navController)
         }
 
-        @Suppress("DEPRECATION")
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-                R.id.navigation_analyze-> {
-                    replaceFragment(AnalyzeFragment())
-                    true
-                }
-                R.id.navigation_business -> {
-                    replaceFragment(BusinessFragment())
-                    true
-                }
+        getSession()
 
-                else -> false
+    }
+
+    private fun getSession() {
+
+        viewModel.getSession().observe(this) {
+            token = it.token
+            if (!it.isLogin) {
+                movesToAuth()
             }
         }
-
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, fragment)
-            .commit()
+    private fun movesToAuth() {
+        Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(this)
+        }
     }
+
 }

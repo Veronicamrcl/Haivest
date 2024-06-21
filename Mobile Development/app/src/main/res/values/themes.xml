@@ -20,4 +20,20 @@
         <item name="android:fontFamily">@font/cambay</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.FishCureApp" parent="Base.Theme.Haivest" />
+    <style name="roundedCorner30">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30dp</item>
+    </style>
+    <style name="roundedCorner20">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="roundedCorner10">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
 </resources>

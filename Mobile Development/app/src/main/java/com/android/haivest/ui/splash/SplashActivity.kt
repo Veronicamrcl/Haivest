@@ -18,21 +18,23 @@ class SplashActivity:AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-
+    private val DURATION_TIME = 3000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Check user's login status
-        viewModel.getSession().observe(this) { user ->
-            if (user.isLogin) {
-                startActivity(Intent(this, MainActivity::class.java))
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
+        Handler().postDelayed({
+            viewModel.getSession().observe(this) { user ->
+                if (user.isLogin) {
+                    startActivity(Intent(this, MainActivity::class.java))
+                } else {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
+                finish()
             }
-            finish()
-        }
+        }, DURATION_TIME)
+
 
 
     }

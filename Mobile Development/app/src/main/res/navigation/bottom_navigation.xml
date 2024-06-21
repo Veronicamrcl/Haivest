@@ -3,24 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav"
-    app:startDestination="@id/navigation_home">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/homeFragment"
         android:name="com.android.haivest.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+
     <fragment
-        android:id="@+id/navigation_analyze"
+        android:id="@+id/analyzeFragment"
         android:name="com.android.haivest.ui.analyze.AnalyzeFragment"
         android:label="Analyze"
         tools:layout="@layout/fragment_analyze">
         <action
-            android:id="@+id/action_analyzeFragment_to_homeFragment"
-            app:destination="@id/navigation_home"/>
+            android:id="@+id/action_analyzeFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"/>
     </fragment>
+
     <fragment
-        android:id="@+id/navigation_business"
+        android:id="@+id/cameraFragment"
+        android:name="com.android.haivest.ui.analyze.detect.CameraFragment"
+        android:label="CameraFragment"
+        tools:layout = "@layout/fragment_camera">
+        <action
+            android:id="@+id/action_cameraFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.android.haivest.ui.analyze.detect.ResultFragment"
+        android:label="ResultFragment"
+        tools:layout="@layout/fragment_result">
+        <argument
+            android:name="imageResult"
+            app:argType="com.android.haivest.data.model.ImageResult" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/businessFragment"
         android:name="com.android.haivest.ui.business.BusinessFragment"
         android:label="Business"
         tools:layout="@layout/fragment_bussiness">
@@ -33,6 +55,20 @@
         android:id="@+id/generateFragment"
         android:name="com.android.haivest.ui.business.GenerateFragment"
         android:label="Generate"
-        tools:layout="@layout/fragment_generate"/>
+        tools:layout="@layout/fragment_generate">
+        <action
+            android:id="@+id/action_generateFragment_to_recommendFragment"
+            app:destination="@+id/recommendFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/recommendFragment"
+        android:name="com.android.haivest.ui.business.recommend.RecommendFragment"
+        android:label="Recommend"
+        tools:layout="@layout/fragment_recommend">
+        <argument
+            android:name="recommendRequest"
+            app:argType="com.android.haivest.data.network.request.RecommendRequest"/>
+    </fragment>
 
 </navigation>

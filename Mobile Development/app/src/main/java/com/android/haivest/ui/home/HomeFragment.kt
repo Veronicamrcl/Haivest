@@ -1,5 +1,6 @@
 package com.android.haivest.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,65 +9,107 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.haivest.R
 import com.android.haivest.data.factory.ViewModelFactory
-import com.android.haivest.databinding.FragmentAnalyzeBinding
 import com.android.haivest.databinding.FragmentHomeBinding
-import com.android.haivest.ui.auth.login.LoginActivity
-import com.android.haivest.ui.auth.register.RegisterViewModel
+import com.android.haivest.ui.detail.DetailNewsActivity
 import com.android.haivest.ui.profile.ProfileActivity
 
+//@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var newsAdapter: NewsAdapter
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // Set up your UI components and listeners here
         binding.buttonProfile.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        return binding.root
-    }
+        val sharedPref = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val username = sharedPref.getString("username", "")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        binding.nameTextView.text = username
 
+        setupRecyclerView()
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.account -> {
-                val intent = Intent(requireContext(), ProfileActivity::class.java)
-                startActivity(intent)
-                true
+        viewModel.newsData.observe(viewLifecycleOwner) { news ->
+            news?.let {
+                newsAdapter.submitList(it.articles)
             }
-            else -> super.onOptionsItemSelected(item)
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.recyclerViewInsight.visibility = View.GONE
+            } else {
+                binding.progressBar.visibility = View.GONE
+                binding.recyclerViewInsight.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.fetchNewsData()
+
+    }
+
+    private fun setupRecyclerView() {
+        newsAdapter = NewsAdapter { article ->
+            val intent = Intent(requireContext(), DetailNewsActivity::class.java)
+            intent.putExtra("article", article)
+            startActivity(intent)
+        }
+        binding.recyclerViewInsight.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = newsAdapter
         }
     }
 
+
+//    @Deprecated("Deprecated in Java")
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.main_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    @Deprecated("Deprecated in Java")
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.account -> {
+//                val intent = Intent(requireContext(), ProfileActivity::class.java)
+//                startActivity(intent)
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

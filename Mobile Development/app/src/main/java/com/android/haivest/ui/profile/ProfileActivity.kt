@@ -1,5 +1,6 @@
 package com.android.haivest.ui.profile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.haivest.data.factory.ViewModelFactory
 import com.android.haivest.databinding.ActivityProfileBinding
 import com.android.haivest.ui.auth.login.LoginActivity
-import com.android.haivest.ui.auth.register.RegisterViewModel
 
 class ProfileActivity:AppCompatActivity() {
 
@@ -21,10 +21,19 @@ class ProfileActivity:AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
         binding.btnLogout.setOnClickListener {
             profileViewModel.logout()
             movesToAuth()
         }
+
+        val sharedPref = this.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        val username = sharedPref.getString("username", "")
+
+        binding.profileName.text = username
 
     }
 

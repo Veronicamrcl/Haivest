@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -19,23 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Haivest"
         tools:targetApi="31">
-
-        <activity android:name=".ui.auth.login.LoginActivity"
-            android:exported="false"
-            />
-
-        <activity android:name=".ui.auth.register.RegisterActivity"
-            android:exported="false"
-            />
-
-        <activity android:name=".MainActivity"
-            android:exported="false"
-            />
-
-        <activity android:name=".ui.profile.ProfileActivity"
-            android:exported="false"
-            />
-
+        <activity
+            android:name=".ui.detail.DetailNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">

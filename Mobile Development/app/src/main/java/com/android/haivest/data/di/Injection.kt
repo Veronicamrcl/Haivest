@@ -4,7 +4,7 @@ import android.content.Context
 import com.android.haivest.data.MainRepository
 import com.android.haivest.data.local.UserPreference
 import com.android.haivest.data.local.dataStore
-import com.android.haivest.data.network.ApiConfig
+import com.android.haivest.data.network.auth.ApiConfig
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
