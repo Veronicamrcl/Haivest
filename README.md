@@ -3,9 +3,9 @@
 
 ## HAIVEST!: Hydroponic Harvest Application 💆‍♀️📱 <br>
 Please introduce our application, HAIVEST! Our application, Haivest, is a mobile application that helps people develop their interest and start a hydroponic business. The application offers everything from local plant recommendations to monitoring the nutritional status of their hydroponic systems.
-Disease Detection through Image Analysis : Developing an advanced machine learning model to analyze user-taken plant images to accurately detect and diagnose diseases. Early and accurate disease detection is critical to maintaining plant health and maximizing yields.
-Generate Personalized Plants : This feature helps users, especially beginners, choose the most suitable plants based on their region, increasing the chances of successful cultivation and reducing trial and error.
-User-Friendly Interface : The user-friendly interface encourages wider adoption of the application, making it accessible to a wider audience, including those with limited technical skills.
+ * Disease Detection through Image Analysis : Developing an advanced machine learning model to analyze user-taken plant images to accurately detect and diagnose diseases. Early and accurate disease detection is critical to maintaining plant health and maximizing yields.
+ * Generate Personalized Plants : This feature helps users, especially beginners, choose the most suitable plants based on their region, increasing the chances of successful cultivation and reducing trial and error.
+ * User-Friendly Interface : The user-friendly interface encourages wider adoption of the application, making it accessible to a wider audience, including those with limited technical skills.
 
 ## [Download App Here (.apk file)](https://drive.google.com/file/d/1WkAbmE4svRkLbcfwI-rN8I3qOzl1J8Wo/view?usp=sharing)📲
 
