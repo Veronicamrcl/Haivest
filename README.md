@@ -1,5 +1,5 @@
-# RejuviFy - Bangkit Capstone Project 2023 ✨
-![Desktop - 1](https://raw.githubusercontent.com/lahiardhan/RejuviFy/master/Frame%201.png)
+# HAIVEST! - Bangkit Capstone Project 2022 ✨
+
 
 ## HAIVEST!: Hydroponic Harvest Application 💆‍♀️📱 <br>
 Please introduce our application, HAIVEST! Our application, Haivest, is a mobile application that helps people develop their interest and start a hydroponic business. The application offers everything from local plant recommendations to monitoring the nutritional status of their hydroponic systems.
