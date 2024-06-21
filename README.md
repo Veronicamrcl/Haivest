@@ -1,6 +1,5 @@
-# HAIVEST! - Bangkit Capstone Project 2024 ✨
-
-![HAIVEST](https://github.com/Veronicamrcl/Haivest/assets/90811312/91a65fa1-e2ab-4470-9e88-a55e610539cb)
+# HAIVEST!: Hydroponic Harvest Application - Bangkit Capstone Project 2024 ✨
+![Desktop - 1]()
 
 ## HAIVEST!: Hydroponic Harvest Application 💆‍♀️📱 <br>
 Please introduce our application, HAIVEST! Our application, Haivest, is a mobile application that helps people develop their interest and start a hydroponic business. The application offers everything from local plant recommendations to monitoring the nutritional status of their hydroponic systems.
